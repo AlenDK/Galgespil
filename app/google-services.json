@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "737733096419",
+    "firebase_url": "https://highscore-ebabd.firebaseio.com",
+    "project_id": "highscore-ebabd",
+    "storage_bucket": "highscore-ebabd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737733096419:android:5c78ce9add5eaa39",
+        "android_client_info": {
+          "package_name": "e.android.gaglespil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "737733096419-64p5aaek30ehgv6qu9m626d99bj95jbi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "e.android.gaglespil",
+            "certificate_hash": "294ef54adffd0526b3bf88fd4e222eb811574d43"
+          }
+        },
+        {
+          "client_id": "737733096419-63jpd6ss1vn4qgo57tc9823jaj6smd3j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZE6KG7OSc9-M9vIir91g9XpVdadQmhKU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "737733096419-63jpd6ss1vn4qgo57tc9823jaj6smd3j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
