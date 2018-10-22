@@ -10,6 +10,7 @@ public class Dialoger extends AppCompatDialogFragment {
 
 
 
+
     String titel, besked;
 
 public Dialog onCreateDialog(Bundle savedInstanceState) {

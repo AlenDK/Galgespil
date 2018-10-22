@@ -97,7 +97,7 @@ public class SelveSpillet extends AppCompatActivity implements View.OnClickListe
         ord.setText(galgeLogik.getSynligtOrd());
         Forkert.setText("" + galgeLogik.getBrugteBogstaver());
 
-
+//dialog skal være her
 
         if(galgeLogik.erSpilletVundet()) {
             dialog.setTitel("Du har vundet!");
