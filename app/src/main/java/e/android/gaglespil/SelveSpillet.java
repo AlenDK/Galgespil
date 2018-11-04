@@ -15,11 +15,18 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SelveSpillet extends AppCompatActivity implements View.OnClickListener {
 
+
     GalgeLogik galgeLogik = new GalgeLogik();
     Dialoger dialog = new Dialoger();
     TextView ord, Forkert;
     EditText gæt;
     Button getKnap;
+    int id;
+    String name = "Bobby";
+    int score = 500;
+    private DatabaseReference mDatabase;
+
+
 
 
     public void ændreBillede() {
@@ -52,15 +59,11 @@ public class SelveSpillet extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selvespillet);
 
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         Forkert = findViewById(R.id.Forkert);
         ord = findViewById(R.id.textOrd);
         gæt = findViewById(R.id.edit);
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-        myRef.setValue("Hello, World!");
-
 
         ord.setText(galgeLogik.getSynligtOrd());
 
@@ -92,6 +95,13 @@ public class SelveSpillet extends AppCompatActivity implements View.OnClickListe
         }
 
 
+        private void nyHighScore(int id, String name, int score) {
+        Bruger bruger = new Bruger(id, name, score);
+
+        mDatabase.child("bruger").setValue(bruger);
+        }
+
+
     public void opdaterSkærm() {
         ændreBillede();
         ord.setText(galgeLogik.getSynligtOrd());
@@ -100,6 +110,10 @@ public class SelveSpillet extends AppCompatActivity implements View.OnClickListe
 //dialog skal være her
 
         if(galgeLogik.erSpilletVundet()) {
+            int id = 500;
+            name = "Lasrs";
+            score = 300;
+            nyHighScore(id , name, score);
             dialog.setTitel("Du har vundet!");
             dialog.setBesked("Ordet var " + galgeLogik.getOrdet() + ". Tryk på ok, for at prøve igen!" );
             Dialog();
