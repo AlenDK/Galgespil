@@ -21,9 +21,6 @@ public class SelveSpillet extends AppCompatActivity implements View.OnClickListe
     TextView ord, Forkert;
     EditText gæt;
     Button getKnap;
-    int id;
-    String name = "Bobby";
-    int score = 500;
     private DatabaseReference mDatabase;
 
 
@@ -59,7 +56,8 @@ public class SelveSpillet extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selvespillet);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = FirebaseDatabase.getInstance().getReference("brugere");
+
 
         Forkert = findViewById(R.id.Forkert);
         ord = findViewById(R.id.textOrd);
@@ -78,7 +76,6 @@ public class SelveSpillet extends AppCompatActivity implements View.OnClickListe
             galgeLogik.nulstil();
         }
 
-
         getKnap.setText("Gæt");
         String bogstav = gæt.getText().toString();
         if (bogstav.length() != 1) {
@@ -95,10 +92,10 @@ public class SelveSpillet extends AppCompatActivity implements View.OnClickListe
         }
 
 
-        private void nyHighScore(int id, String name, int score) {
+        private void nyHighScore(String id, String name, int score) {
         Bruger bruger = new Bruger(id, name, score);
 
-        mDatabase.child("bruger").setValue(bruger);
+        mDatabase.child(id).setValue(bruger);
         }
 
 
@@ -110,10 +107,12 @@ public class SelveSpillet extends AppCompatActivity implements View.OnClickListe
 //dialog skal være her
 
         if(galgeLogik.erSpilletVundet()) {
-            int id = 500;
-            name = "Lasrs";
-            score = 300;
+
+            String id = mDatabase.push().getKey();
+            String name = "Alen";
+            int score = 500;
             nyHighScore(id , name, score);
+
             dialog.setTitel("Du har vundet!");
             dialog.setBesked("Ordet var " + galgeLogik.getOrdet() + ". Tryk på ok, for at prøve igen!" );
             Dialog();
