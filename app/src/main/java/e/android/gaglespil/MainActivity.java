@@ -43,8 +43,10 @@ public class MainActivity extends Fragment implements View.OnClickListener {
 
             case R.id.Spil:
 
-                Intent intent2 = new Intent(getActivity(), SelveSpillet.class);
-                startActivity(intent2);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentindhold, new SelveSpillet())
+                        .addToBackStack(null)
+                        .commit();
                 break;
 
             case R.id.highscore:
