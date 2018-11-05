@@ -5,13 +5,18 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class DAO {
 
+
     private DatabaseReference mDatabase;
 
 
-    public DAO()
+    public  DAO()
     {
         mDatabase = FirebaseDatabase.getInstance().getReference("brugere");
 
+    }
+
+    public DatabaseReference mDatabase() {
+        return mDatabase;
     }
 
     public void nyHighScore(String id, String name, int score) {

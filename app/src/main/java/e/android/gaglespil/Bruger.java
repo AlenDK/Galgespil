@@ -4,13 +4,13 @@ public class Bruger {
 
     public String id;
     public String navn;
-    public int score;
+    public long score;
 
     public Bruger() {
 
     }
 
-    public Bruger(String id, String navn, int score) {
+    public Bruger(String id, String navn, long score) {
         this.id = id;
         this.navn = navn;
         this.score = score;
@@ -24,7 +24,7 @@ public class Bruger {
         this.navn = navn;
     }
 
-    public int getScore() {
+    public long getScore() {
         return score;
     }
 

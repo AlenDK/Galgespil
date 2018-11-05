@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.firebase.client.Firebase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -108,8 +107,8 @@ public class SelveSpillet extends AppCompatActivity implements View.OnClickListe
 
         if(galgeLogik.erSpilletVundet()) {
             String id = dao.pushBruger();
-            String name = "Lal";
-            int score = 400;
+            String name = "Ll";
+            int score = 10;
             dao.nyHighScore(id , name, score);
 
 
