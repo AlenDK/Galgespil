@@ -16,12 +16,13 @@ import com.google.firebase.database.FirebaseDatabase;
 public class SelveSpillet extends AppCompatActivity implements View.OnClickListener {
 
 
+    DAO dao = new DAO();
     GalgeLogik galgeLogik = new GalgeLogik();
     Dialoger dialog = new Dialoger();
     TextView ord, Forkert;
     EditText gæt;
     Button getKnap;
-    private DatabaseReference mDatabase;
+
 
 
 
@@ -56,7 +57,6 @@ public class SelveSpillet extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selvespillet);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("brugere");
 
 
         Forkert = findViewById(R.id.Forkert);
@@ -92,11 +92,10 @@ public class SelveSpillet extends AppCompatActivity implements View.OnClickListe
         }
 
 
-        private void nyHighScore(String id, String name, int score) {
-        Bruger bruger = new Bruger(id, name, score);
 
-        mDatabase.child(id).setValue(bruger);
-        }
+
+
+
 
 
     public void opdaterSkærm() {
@@ -106,12 +105,14 @@ public class SelveSpillet extends AppCompatActivity implements View.OnClickListe
 
 //dialog skal være her
 
-        if(galgeLogik.erSpilletVundet()) {
 
-            String id = mDatabase.push().getKey();
-            String name = "Alen";
-            int score = 500;
-            nyHighScore(id , name, score);
+        if(galgeLogik.erSpilletVundet()) {
+            String id = dao.pushBruger();
+            String name = "Lal";
+            int score = 400;
+            dao.nyHighScore(id , name, score);
+
+
 
             dialog.setTitel("Du har vundet!");
             dialog.setBesked("Ordet var " + galgeLogik.getOrdet() + ". Tryk på ok, for at prøve igen!" );
