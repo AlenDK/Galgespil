@@ -27,8 +27,8 @@ public class HighScore extends Fragment {
 
     DAO dao = new DAO();
     ListView brugerlist;
-
     BrugerList adapter;
+
 
     List<Bruger> brugerliste;
 
@@ -36,14 +36,16 @@ public class HighScore extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.highscore, container, false);
 
+        brugerliste = new ArrayList<>();
+
         brugerlist = view.findViewById(R.id.brugerlist);
-
-
-        brugerlist.setAdapter(adapter);
 
         adapter = new BrugerList(getActivity(), brugerliste);
 
-        brugerliste = new ArrayList<>();
+        brugerlist.setAdapter(adapter);
+
+
+
 
         Log.d(TAG, "create " + brugerliste.size());
 
@@ -55,14 +57,6 @@ public class HighScore extends Fragment {
     public void onStart() {
         super.onStart();
 
-        brugerliste.add(new Bruger("fff", "Alen", 500));
-        brugerliste.add(new Bruger("qqq", "sda", 33));
-        brugerliste.add(new Bruger("caq", "LP", 3333));
-        adapter.notifyDataSetChanged();
-
-        Log.d(TAG, "onsStart " + brugerliste.size());
-
-/*
         dao.mDatabase().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -86,7 +80,7 @@ public class HighScore extends Fragment {
         });
 
 
-*/
+
 
     }
 }
