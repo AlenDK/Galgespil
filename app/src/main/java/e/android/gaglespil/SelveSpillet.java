@@ -28,6 +28,7 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
     Button getKnap;
     ImageView billede;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.selvespillet, container, false);
@@ -102,13 +103,10 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 
 
         if(galgeLogik.erSpilletVundet()) {
-            String id = dao.pushBruger();
-            String name = "Ll";
-            int score = 10;
-            dao.nyHighScore(id , name, score);
-
-            galgeLogik.nulstil();
-            opdaterSkærm();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentindhold, new Vinder_frag())
+                    .addToBackStack(null)
+                    .commit();
         }
         if(galgeLogik.erSpilletTabt()) {
             getFragmentManager().beginTransaction()
