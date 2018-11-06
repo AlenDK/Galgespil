@@ -28,7 +28,7 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
     GalgeLogik galgeLogik = new GalgeLogik();
     Dialoger dialog = new Dialoger();
     TextView ord, Forkert, point;
-    int points;
+    int points, antalforsøg;
     EditText gæt;
     Button getKnap;
     ImageView billede;
@@ -39,7 +39,10 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.selvespillet, container, false);
 
+        /*
         new DownloadFilesTask().execute();
+        */
+
 
         Forkert = view.findViewById(R.id.Forkert);
         ord = view.findViewById(R.id.textOrd);
@@ -79,6 +82,7 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
             return;
         }
         galgeLogik.gætBogstav(bogstav);
+        updateForsøg();
         gæt.setText("");
         if(galgeLogik.erSidsteBogstavKorrekt() == true) {
             updatePoints(50);
@@ -110,6 +114,10 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
     }
 
 
+    public void updateForsøg() {
+        antalforsøg += 1;
+        point.setText("" + antalforsøg);
+    }
     public void updatePoints(int i) {
         points += i;
         point.setText("Score: " + points);
@@ -137,20 +145,23 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
         Forkert.setText("" + galgeLogik.getBrugteBogstaver());
 
 //dialog skal være her
-
-
         if(galgeLogik.erSpilletVundet()) {
 
-            updatePoints(-100);
+
+            updatePoints(100);
 
             Bundle bundle = new Bundle();
-            bundle.putInt("score", points);
+            bundle.putString("keys", "" + antalforsøg);
 
             Vinder_frag vinderfraq = new Vinder_frag();
             vinderfraq.setArguments(bundle);
 
+            galgeLogik.nulstil();
+            points = 0;
+            opdaterSkærm();
+
             getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, new Vinder_frag())
+                    .replace(R.id.fragmentindhold, vinderfraq)
                     .addToBackStack(null)
                     .commit();
         }
@@ -159,13 +170,15 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
             updatePoints(-100);
 
             Bundle bundle = new Bundle();
-            bundle.putString("key", galgeLogik.getOrdet());
+            bundle.putString("ord", galgeLogik.getOrdet());
             bundle.putInt("score", points);
 
             Taber_frag taberfraq = new Taber_frag();
             taberfraq.setArguments(bundle);
 
             galgeLogik.nulstil();
+            points = 0;
+
             opdaterSkærm();
 
             getFragmentManager().beginTransaction()

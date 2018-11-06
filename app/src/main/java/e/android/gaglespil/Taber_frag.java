@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Taber_frag extends Fragment implements View.OnClickListener {
 
     SelveSpillet spil = new SelveSpillet();
-    TextView taberOrd;
+    TextView taberOrd, scoreT;
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -23,11 +23,13 @@ public class Taber_frag extends Fragment implements View.OnClickListener {
 
 
         taberOrd = view.findViewById(R.id.tabteOrd);
+        scoreT = view.findViewById(R.id.scoreT);
 
 
         Bundle bundle = this.getArguments();
         if(bundle!= null) {
-            taberOrd.setText(bundle.getString("key"));
+            taberOrd.setText(bundle.getString("ord"));
+      /*      scoreT.setText(bundle.getInt("score")); */
         }
 
         Button b1 = (Button) view.findViewById(R.id.tilbageTilHighScore1);
