@@ -24,7 +24,11 @@ public class Taber_frag extends Fragment implements View.OnClickListener {
 
         taberOrd = view.findViewById(R.id.tabteOrd);
 
-        taberOrd.setText((CharSequence) spil.ord);
+
+        Bundle bundle = this.getArguments();
+        if(bundle!= null) {
+            taberOrd.setText(bundle.getString("key"));
+        }
 
         Button b1 = (Button) view.findViewById(R.id.tilbageTilHighScore1);
 

@@ -109,8 +109,15 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
                     .commit();
         }
         if(galgeLogik.erSpilletTabt()) {
+
+            Bundle bundle = new Bundle();
+            bundle.putString("key", galgeLogik.getOrdet());
+
+            Taber_frag taberfraq = new Taber_frag();
+            taberfraq.setArguments(bundle);
+
             getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, new Taber_frag())
+                    .replace(R.id.fragmentindhold, taberfraq)
                     .addToBackStack(null)
                     .commit();
         }
