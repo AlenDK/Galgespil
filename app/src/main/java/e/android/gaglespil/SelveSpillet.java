@@ -2,6 +2,7 @@ package e.android.gaglespil;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.net.URL;
 
 
 public class SelveSpillet extends Fragment implements View.OnClickListener {
@@ -23,25 +27,30 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
     DAO dao = new DAO();
     GalgeLogik galgeLogik = new GalgeLogik();
     Dialoger dialog = new Dialoger();
-    TextView ord, Forkert;
+    TextView ord, Forkert, point;
+    int points;
     EditText gæt;
     Button getKnap;
     ImageView billede;
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.selvespillet, container, false);
 
+        new DownloadFilesTask().execute();
+
         Forkert = view.findViewById(R.id.Forkert);
         ord = view.findViewById(R.id.textOrd);
         gæt = view.findViewById(R.id.edit);
+        point = view.findViewById(R.id.point);
+        point.setText("Score: " + points);
+
 
         billede = view.findViewById(R.id.imageView);
         ændreBillede();
 
-
-        ord.setText(galgeLogik.getSynligtOrd());
 
         getKnap = (Button) view.findViewById(R.id.button) ;
         getKnap.setOnClickListener(this);
@@ -65,9 +74,18 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
         } else if (galgeLogik.getBrugteBogstaver().contains(bogstav)) {
             gæt.setError("Bogstavet er gættet på");
             return;
+        } else if (bogstav == "1") {
+            gæt.setError("Du må kun gætte på bogstaver");
+            return;
         }
         galgeLogik.gætBogstav(bogstav);
         gæt.setText("");
+        if(galgeLogik.erSidsteBogstavKorrekt() == true) {
+            updatePoints(50);
+        } else {
+            updatePoints(-50);
+
+        }
         gæt.setError(null);
             opdaterSkærm();
         }
@@ -92,6 +110,25 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
     }
 
 
+    public void updatePoints(int i) {
+        points += i;
+        point.setText("Score: " + points);
+    }
+
+    private class DownloadFilesTask extends AsyncTask  {
+
+        protected Object doInBackground(Object... arg0) {
+            try {
+                galgeLogik.hentOrdFraDr();
+                return "Virker";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "fejl";
+            }
+
+        }
+
+    }
 
 
     public void opdaterSkærm() {
@@ -103,6 +140,15 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 
 
         if(galgeLogik.erSpilletVundet()) {
+
+            updatePoints(-100);
+
+            Bundle bundle = new Bundle();
+            bundle.putInt("score", points);
+
+            Vinder_frag vinderfraq = new Vinder_frag();
+            vinderfraq.setArguments(bundle);
+
             getFragmentManager().beginTransaction()
                     .replace(R.id.fragmentindhold, new Vinder_frag())
                     .addToBackStack(null)
@@ -110,11 +156,17 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
         }
         if(galgeLogik.erSpilletTabt()) {
 
+            updatePoints(-100);
+
             Bundle bundle = new Bundle();
             bundle.putString("key", galgeLogik.getOrdet());
+            bundle.putInt("score", points);
 
             Taber_frag taberfraq = new Taber_frag();
             taberfraq.setArguments(bundle);
+
+            galgeLogik.nulstil();
+            opdaterSkærm();
 
             getFragmentManager().beginTransaction()
                     .replace(R.id.fragmentindhold, taberfraq)
