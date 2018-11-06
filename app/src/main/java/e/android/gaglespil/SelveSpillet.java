@@ -27,11 +27,12 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
     DAO dao = new DAO();
     GalgeLogik galgeLogik = new GalgeLogik();
     Dialoger dialog = new Dialoger();
-    TextView ord, Forkert, point;
+    TextView ord, Forkert, point, hentDR;
     int points, antalforsøg;
     EditText gæt;
     Button getKnap;
     ImageView billede;
+    ProgressBar progressBar;
 
 
 
@@ -39,24 +40,22 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.selvespillet, container, false);
 
-        /*
-        new DownloadFilesTask().execute();
-        */
 
 
+
+        progressBar = view.findViewById(R.id.progress);
         Forkert = view.findViewById(R.id.Forkert);
         ord = view.findViewById(R.id.textOrd);
         gæt = view.findViewById(R.id.edit);
         point = view.findViewById(R.id.point);
-        point.setText("Score: " + points);
-
+        hentDR = view.findViewById(R.id.drtext);
 
         billede = view.findViewById(R.id.imageView);
-        ændreBillede();
-
 
         getKnap = (Button) view.findViewById(R.id.button) ;
         getKnap.setOnClickListener(this);
+
+        new AsyncTaskBackground().execute();
 
         return view;
     }
@@ -123,7 +122,19 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
         point.setText("Score: " + points);
     }
 
-    private class DownloadFilesTask extends AsyncTask  {
+    private class AsyncTaskBackground extends AsyncTask  {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+            gæt.setVisibility(View.INVISIBLE);
+            getKnap.setVisibility(View.INVISIBLE);
+            ord.setVisibility(View.INVISIBLE);
+            point.setVisibility(View.INVISIBLE);
+            billede.setVisibility(View.INVISIBLE);
+            Forkert.setVisibility(View.INVISIBLE);
+        }
 
         protected Object doInBackground(Object... arg0) {
             try {
@@ -133,8 +144,27 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
                 e.printStackTrace();
                 return "fejl";
             }
-
         }
+
+            @Override
+            protected void onPostExecute(Object arg0 ) {
+                progressBar.setVisibility(View.INVISIBLE);
+                gæt.setVisibility(View.VISIBLE);
+                getKnap.setVisibility(View.VISIBLE);
+                hentDR.setVisibility(View.INVISIBLE);
+                ord.setVisibility(View.VISIBLE);
+                point.setVisibility(View.VISIBLE);
+                billede.setVisibility(View.VISIBLE);
+                Forkert.setVisibility(View.VISIBLE);
+
+
+
+
+                galgeLogik.nulstil();
+                ord.setText(galgeLogik.getSynligtOrd());
+                point.setText("Score: " + points);
+                ændreBillede();
+            }
 
     }
 
