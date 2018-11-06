@@ -151,12 +151,14 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
             updatePoints(100);
 
             Bundle bundle = new Bundle();
+            bundle.putInt("score", points);
             bundle.putString("keys", "" + antalforsøg);
 
             Vinder_frag vinderfraq = new Vinder_frag();
             vinderfraq.setArguments(bundle);
 
             galgeLogik.nulstil();
+            antalforsøg = 0;
             points = 0;
             opdaterSkærm();
 

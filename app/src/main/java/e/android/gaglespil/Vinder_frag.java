@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Vinder_frag extends Fragment implements View.OnClickListener {
 
     SelveSpillet spil = new SelveSpillet();
-    int forsøg;
+    int score;
     TextView antalforsøg, scoreV;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -26,10 +26,12 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
         scoreV = view.findViewById(R.id.scoreV);
 
 
+
         Bundle bundle = this.getArguments();
         if(bundle!= null) {
             antalforsøg.setText(bundle.getString("keys"));
-  /*          scoreV.setText(bundle.getInt("score")); */
+            score = bundle.getInt("score");
+             scoreV.setText("" + score);
         }
 
 

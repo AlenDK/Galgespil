@@ -16,6 +16,7 @@ public class Taber_frag extends Fragment implements View.OnClickListener {
 
     SelveSpillet spil = new SelveSpillet();
     TextView taberOrd, scoreT;
+    int score;
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -29,7 +30,8 @@ public class Taber_frag extends Fragment implements View.OnClickListener {
         Bundle bundle = this.getArguments();
         if(bundle!= null) {
             taberOrd.setText(bundle.getString("ord"));
-      /*      scoreT.setText(bundle.getInt("score")); */
+            score = bundle.getInt("score");
+             scoreT.setText("" + score);
         }
 
         Button b1 = (Button) view.findViewById(R.id.tilbageTilHighScore1);
