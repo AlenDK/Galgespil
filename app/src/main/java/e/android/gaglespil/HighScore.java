@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HighScore extends Fragment {
@@ -65,6 +66,8 @@ public class HighScore extends Fragment {
                     Bruger bruger = brugerSnapshot.getValue(Bruger.class);
 
                     brugerliste.add((bruger));
+                    Collections.sort(brugerliste);
+
 
                 }
 

@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class BrugerList extends  ArrayAdapter<Bruger> {
@@ -33,7 +35,9 @@ public class BrugerList extends  ArrayAdapter<Bruger> {
             TextView nameView = (TextView) listViewItem.findViewById(R.id.navnLayout);
             TextView scoreView = (TextView) listViewItem.findViewById(R.id.scoreLayout);
 
+
             Bruger bruger = brugerList.get(position);
+
 
             nameView.setText(bruger.getNavn());
             scoreView.setText("" + bruger.getScore());
