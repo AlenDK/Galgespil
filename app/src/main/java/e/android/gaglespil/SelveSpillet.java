@@ -58,9 +58,9 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
         getKnap = (Button) view.findViewById(R.id.button);
         getKnap.setOnClickListener(this);
 
-        /*
+
         new AsyncTaskBackground().execute();
-*/
+
 
         return view;
     }
@@ -86,9 +86,9 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
         updateForsøg();
         gæt.setText("");
         if (galgeLogik.erSidsteBogstavKorrekt() == true) {
-            updatePoints(50);
+            updatePoints(10);
         } else {
-            updatePoints(-50);
+            updatePoints(-5);
 
         }
         gæt.setError(null);
@@ -197,7 +197,7 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 //dialog skal være her
         if (galgeLogik.erSpilletVundet()) {
 
-            updatePoints(100);
+            updatePoints(25);
 
 
             updateSpil();
@@ -217,12 +217,11 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 
             getFragmentManager().beginTransaction()
                     .replace(R.id.fragmentindhold, vinderfraq)
-                    .addToBackStack(null)
                     .commit();
         }
         if (galgeLogik.erSpilletTabt()) {
 
-            updatePoints(-100);
+            updatePoints(-25);
             updateSpil();
 
             Bundle bundle = new Bundle();
@@ -239,7 +238,6 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 
             getFragmentManager().beginTransaction()
                     .replace(R.id.fragmentindhold, taberfraq)
-                    .addToBackStack(null)
                     .commit();
         }
     }

@@ -70,7 +70,6 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
 
                 getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentindhold, new HighScore())
-                        .addToBackStack(null)
                         .commit();
                 break;
         }
