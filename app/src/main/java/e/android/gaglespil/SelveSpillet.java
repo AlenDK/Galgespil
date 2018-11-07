@@ -2,8 +2,10 @@ package e.android.gaglespil;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -24,11 +26,13 @@ import java.net.URL;
 public class SelveSpillet extends Fragment implements View.OnClickListener {
 
 
+
+    SharedPreferences prefs;
     DAO dao = new DAO();
     GalgeLogik galgeLogik = new GalgeLogik();
     Dialoger dialog = new Dialoger();
     TextView ord, Forkert, point, hentDR;
-    int points, antalforsøg;
+    int points, antalforsøg, gennemført;
     EditText gæt;
     Button getKnap;
     ImageView billede;
@@ -55,7 +59,10 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
         getKnap = (Button) view.findViewById(R.id.button) ;
         getKnap.setOnClickListener(this);
 
+        /*
         new AsyncTaskBackground().execute();
+*/
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         return view;
     }
@@ -115,11 +122,16 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 
     public void updateForsøg() {
         antalforsøg += 1;
-        point.setText("" + antalforsøg);
     }
     public void updatePoints(int i) {
         points += i;
         point.setText("Score: " + points);
+    }
+
+    public void updateGennemført() {
+        gennemført = prefs.getInt("Omgange", 0);
+        gennemført += 1;
+        prefs.edit().putInt("Omgange", gennemført).commit();
     }
 
     private class AsyncTaskBackground extends AsyncTask  {
@@ -177,8 +189,12 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 //dialog skal være her
         if(galgeLogik.erSpilletVundet()) {
 
-
             updatePoints(100);
+
+
+
+            updateGennemført();
+            antalforsøg = prefs.getInt("Omgange", -1);
 
             Bundle bundle = new Bundle();
             bundle.putInt("score", points);
@@ -188,7 +204,9 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
             vinderfraq.setArguments(bundle);
 
             galgeLogik.nulstil();
+   /*
             antalforsøg = 0;
+     */
             points = 0;
             opdaterSkærm();
 
