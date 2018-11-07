@@ -9,8 +9,7 @@ public class DAO {
     private DatabaseReference mDatabase;
 
 
-    public  DAO()
-    {
+    public DAO() {
         mDatabase = FirebaseDatabase.getInstance().getReference("brugere");
 
     }
@@ -26,7 +25,7 @@ public class DAO {
     }
 
     public String pushBruger() {
-      return  mDatabase.push().getKey();
+        return mDatabase.push().getKey();
     }
 
 }

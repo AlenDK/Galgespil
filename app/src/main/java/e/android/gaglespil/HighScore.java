@@ -40,7 +40,7 @@ public class HighScore extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.highscore, container, false);
 
-        menu = (Button) view.findViewById(R.id.menu) ;
+        menu = (Button) view.findViewById(R.id.menu);
         menu.setOnClickListener(this);
 
         brugerliste = new ArrayList<>();
@@ -88,7 +88,7 @@ public class HighScore extends Fragment implements View.OnClickListener {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        for(DataSnapshot brugerSnapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot brugerSnapshot : dataSnapshot.getChildren()) {
                             Bruger bruger = brugerSnapshot.getValue(Bruger.class);
 
                             brugerliste.add((bruger));
@@ -115,15 +115,12 @@ public class HighScore extends Fragment implements View.OnClickListener {
         }
 
         @Override
-        protected void onPostExecute(Object arg0 ) {
+        protected void onPostExecute(Object arg0) {
             progressBar.setVisibility(View.INVISIBLE);
             brugerlist.setVisibility(View.VISIBLE);
         }
 
     }
-
-
-
 
 
 }

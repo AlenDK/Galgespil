@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 public class Vinder_frag extends Fragment implements View.OnClickListener {
 
-    SelveSpillet spil = new SelveSpillet();
     int score;
     TextView antalforsøg, scoreV;
 

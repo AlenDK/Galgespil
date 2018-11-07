@@ -26,18 +26,17 @@ import java.net.URL;
 public class SelveSpillet extends Fragment implements View.OnClickListener {
 
 
-
     SharedPreferences prefs;
+
     DAO dao = new DAO();
     GalgeLogik galgeLogik = new GalgeLogik();
     Dialoger dialog = new Dialoger();
     TextView ord, Forkert, point, hentDR;
-    int points, antalforsøg, gennemført;
+    int points, antalforsøg, gennemførtV, gennemført;
     EditText gæt;
     Button getKnap;
     ImageView billede;
     ProgressBar progressBar;
-
 
 
     @Override
@@ -45,6 +44,7 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.selvespillet, container, false);
 
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
 
         progressBar = view.findViewById(R.id.progress);
@@ -56,13 +56,12 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 
         billede = view.findViewById(R.id.imageView);
 
-        getKnap = (Button) view.findViewById(R.id.button) ;
+        getKnap = (Button) view.findViewById(R.id.button);
         getKnap.setOnClickListener(this);
 
         /*
         new AsyncTaskBackground().execute();
 */
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         return view;
     }
@@ -80,41 +79,45 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
         if (bogstav.length() != 1) {
             gæt.setError("Skriv et bogstav");
             return;
-        } else if (galgeLogik.getBrugteBogstaver().contains(bogstav)) {
+        } else if (galgeLogik.getBrugteBogstaver().contains(bogstav.toLowerCase()) || galgeLogik.getBrugteBogstaver().contains(bogstav.toUpperCase())) {
             gæt.setError("Bogstavet er gættet på");
-            return;
-        } else if (bogstav == "1") {
-            gæt.setError("Du må kun gætte på bogstaver");
             return;
         }
         galgeLogik.gætBogstav(bogstav);
         updateForsøg();
         gæt.setText("");
-        if(galgeLogik.erSidsteBogstavKorrekt() == true) {
+        if (galgeLogik.erSidsteBogstavKorrekt() == true) {
             updatePoints(50);
         } else {
             updatePoints(-50);
 
         }
         gæt.setError(null);
-            opdaterSkærm();
-        }
+        opdaterSkærm();
+    }
 
     public void ændreBillede() {
         switch (galgeLogik.getAntalForkerteBogstaver()) {
-            case 1: billede.setImageResource(R.drawable.forkert1);
+            case 1:
+                billede.setImageResource(R.drawable.forkert1);
                 break;
-            case 2: billede.setImageResource(R.drawable.forkert2);
+            case 2:
+                billede.setImageResource(R.drawable.forkert2);
                 break;
-            case 3: billede.setImageResource(R.drawable.forkert3);
+            case 3:
+                billede.setImageResource(R.drawable.forkert3);
                 break;
-            case 4: billede.setImageResource(R.drawable.forkert4);
+            case 4:
+                billede.setImageResource(R.drawable.forkert4);
                 break;
-            case 5: billede.setImageResource(R.drawable.forkert5);
+            case 5:
+                billede.setImageResource(R.drawable.forkert5);
                 break;
-            case 6: billede.setImageResource(R.drawable.forkert6);
+            case 6:
+                billede.setImageResource(R.drawable.forkert6);
                 break;
-            default: billede.setImageResource(R.drawable.galge);
+            default:
+                billede.setImageResource(R.drawable.galge);
         }
 
     }
@@ -123,18 +126,26 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
     public void updateForsøg() {
         antalforsøg += 1;
     }
+
     public void updatePoints(int i) {
         points += i;
         point.setText("Score: " + points);
     }
 
     public void updateGennemført() {
-        gennemført = prefs.getInt("Omgange", 0);
-        gennemført += 1;
-        prefs.edit().putInt("Omgange", gennemført).commit();
+        gennemførtV = prefs.getInt("RoundV", 0);
+        gennemførtV += 1;
+        prefs.edit().putInt("RoundV", gennemførtV).commit();
     }
 
-    private class AsyncTaskBackground extends AsyncTask  {
+    public void updateSpil() {
+        gennemført = prefs.getInt("Round", 0);
+        gennemført += 1;
+        prefs.edit().putInt("Round", gennemført).commit();
+    }
+
+
+    private class AsyncTaskBackground extends AsyncTask {
 
         @Override
         protected void onPreExecute() {
@@ -158,25 +169,23 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
             }
         }
 
-            @Override
-            protected void onPostExecute(Object arg0 ) {
-                progressBar.setVisibility(View.INVISIBLE);
-                gæt.setVisibility(View.VISIBLE);
-                getKnap.setVisibility(View.VISIBLE);
-                hentDR.setVisibility(View.INVISIBLE);
-                ord.setVisibility(View.VISIBLE);
-                point.setVisibility(View.VISIBLE);
-                billede.setVisibility(View.VISIBLE);
-                Forkert.setVisibility(View.VISIBLE);
+        @Override
+        protected void onPostExecute(Object arg0) {
+            progressBar.setVisibility(View.INVISIBLE);
+            gæt.setVisibility(View.VISIBLE);
+            getKnap.setVisibility(View.VISIBLE);
+            hentDR.setVisibility(View.INVISIBLE);
+            ord.setVisibility(View.VISIBLE);
+            point.setVisibility(View.VISIBLE);
+            billede.setVisibility(View.VISIBLE);
+            Forkert.setVisibility(View.VISIBLE);
 
 
-
-
-                galgeLogik.nulstil();
-                ord.setText(galgeLogik.getSynligtOrd());
-                point.setText("Score: " + points);
-                ændreBillede();
-            }
+            galgeLogik.nulstil();
+            ord.setText(galgeLogik.getSynligtOrd());
+            point.setText("Score: " + points);
+            ændreBillede();
+        }
 
     }
 
@@ -187,14 +196,13 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
         Forkert.setText("" + galgeLogik.getBrugteBogstaver());
 
 //dialog skal være her
-        if(galgeLogik.erSpilletVundet()) {
+        if (galgeLogik.erSpilletVundet()) {
 
             updatePoints(100);
 
 
-
+            updateSpil();
             updateGennemført();
-            antalforsøg = prefs.getInt("Omgange", -1);
 
             Bundle bundle = new Bundle();
             bundle.putInt("score", points);
@@ -204,9 +212,7 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
             vinderfraq.setArguments(bundle);
 
             galgeLogik.nulstil();
-   /*
             antalforsøg = 0;
-     */
             points = 0;
             opdaterSkærm();
 
@@ -215,9 +221,10 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
                     .addToBackStack(null)
                     .commit();
         }
-        if(galgeLogik.erSpilletTabt()) {
+        if (galgeLogik.erSpilletTabt()) {
 
             updatePoints(-100);
+            updateSpil();
 
             Bundle bundle = new Bundle();
             bundle.putString("ord", galgeLogik.getOrdet());

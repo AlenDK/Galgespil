@@ -37,5 +37,5 @@ public class Bruger  implements  Comparable<Bruger> {
     @Override
     public int compareTo(@NonNull Bruger bruger) {
         return this.score > bruger.score ? -1 : this.score < bruger.score? 1 : 0 ;
-    }
 }
+    }
