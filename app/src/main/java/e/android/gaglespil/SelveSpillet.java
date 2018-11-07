@@ -30,7 +30,6 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 
     DAO dao = new DAO();
     GalgeLogik galgeLogik = new GalgeLogik();
-    Dialoger dialog = new Dialoger();
     TextView ord, Forkert, point, hentDR;
     int points, antalforsøg, gennemførtV, gennemført;
     EditText gæt;
