@@ -31,7 +31,7 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
     DAO dao = new DAO();
     GalgeLogik galgeLogik = new GalgeLogik();
     TextView ord, Forkert, point, hentDR;
-    int points, antalforsøg, gennemførtV, gennemført;
+    int score, antalforsøg, gennemførtV, gennemført;
     EditText gæt;
     Button getKnap;
     ImageView billede;
@@ -47,7 +47,7 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 
 
         progressBar = view.findViewById(R.id.progress);
-        Forkert = view.findViewById(R.id.Forkert);
+        Forkert = view.findViewById(R.id.forkert);
         ord = view.findViewById(R.id.textOrd);
         gæt = view.findViewById(R.id.edit);
         point = view.findViewById(R.id.point);
@@ -126,8 +126,8 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
     }
 
     public void updatePoints(int i) {
-        points += i;
-        point.setText("Score: " + points);
+        score += i;
+        point.setText("Score: " + score);
     }
 
     public void updateGennemført() {
@@ -160,10 +160,10 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
         protected Object doInBackground(Object... arg0) {
             try {
                 galgeLogik.hentOrdFraDr();
-                return "Virker";
+                return "Du har hentet ord fra DR";
             } catch (Exception e) {
                 e.printStackTrace();
-                return "fejl";
+                return "Der er sket en fejl, mens der er blevet hentet ord fra DR";
             }
         }
 
@@ -181,7 +181,7 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 
             galgeLogik.nulstil();
             ord.setText(galgeLogik.getSynligtOrd());
-            point.setText("Score: " + points);
+            point.setText("Score: " + score);
             ændreBillede();
         }
 
@@ -204,7 +204,7 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 
             Bundle bundle = new Bundle();
             bundle.putString("ord", galgeLogik.getOrdet());
-            bundle.putInt("score", points);
+            bundle.putInt("score", score);
             bundle.putString("keys", "" + antalforsøg);
 
             Vinder_frag vinderfraq = new Vinder_frag();
@@ -212,7 +212,7 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 
             galgeLogik.nulstil();
             antalforsøg = 0;
-            points = 0;
+            score = 0;
             opdaterSkærm();
 
             getFragmentManager().beginTransaction()
@@ -226,13 +226,13 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 
             Bundle bundle = new Bundle();
             bundle.putString("ord", galgeLogik.getOrdet());
-            bundle.putInt("score", points);
+            bundle.putInt("score", score);
 
             Taber_frag taberfraq = new Taber_frag();
             taberfraq.setArguments(bundle);
 
             galgeLogik.nulstil();
-            points = 0;
+            score = 0;
 
             opdaterSkærm();
 
