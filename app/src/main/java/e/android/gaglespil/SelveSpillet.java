@@ -204,6 +204,7 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
             updateGennemført();
 
             Bundle bundle = new Bundle();
+            bundle.putString("ord", galgeLogik.getOrdet());
             bundle.putInt("score", points);
             bundle.putString("keys", "" + antalforsøg);
 

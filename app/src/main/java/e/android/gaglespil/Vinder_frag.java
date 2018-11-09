@@ -34,9 +34,11 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
 
         Bundle bundle = this.getArguments();
         if(bundle!= null) {
-            antalforsøg.setText("Du brugte " + bundle.getString("keys") + " antal forsøg!");
             score = bundle.getInt("score");
-             scoreV.setText("Din score blev:" + score);
+            antalforsøg.setText("Du brugte " + bundle.getString("keys") + " antal forsøg!" + " \n"
+                    + "Du gættede ordet: " + bundle.getString("ord") + " \n"
+                    +  "Din score blev: " + score );
+
         }
 
 

@@ -2,7 +2,7 @@ package e.android.gaglespil;
 
 import android.support.annotation.NonNull;
 
-public class Bruger  implements  Comparable<Bruger> {
+public class Bruger  implements Comparable<Bruger> {
 
     public String id;
     public String navn;
@@ -36,6 +36,13 @@ public class Bruger  implements  Comparable<Bruger> {
 
     @Override
     public int compareTo(@NonNull Bruger bruger) {
-        return this.score > bruger.score ? -1 : this.score < bruger.score? 1 : 0 ;
-}
+
+        if ( this.score > bruger.score) {
+            return -1;
+        } else if (this.score < bruger.score){
+            return 1;
+        } else {
+            return 0;
+        }
+        }
     }
