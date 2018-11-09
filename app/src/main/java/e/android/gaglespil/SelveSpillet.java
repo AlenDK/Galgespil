@@ -52,7 +52,6 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
         gæt = view.findViewById(R.id.edit);
         point = view.findViewById(R.id.point);
         hentDR = view.findViewById(R.id.drtext);
-
         billede = view.findViewById(R.id.imageView);
 
         getKnap = (Button) view.findViewById(R.id.button);
