@@ -18,7 +18,7 @@ import java.text.DecimalFormat;
 public class MainActivity extends Fragment implements View.OnClickListener {
 
     SharedPreferences prefs;
-    TextView procentVundet, procentVundet2;
+    TextView procentVundet;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -1,8 +1,6 @@
 package e.android.gaglespil;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,13 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
 
-import com.google.firebase.FirebaseError;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -30,7 +26,7 @@ public class HighScore extends Fragment implements View.OnClickListener {
     private static final String TAG = "Highscore";
 
     DAO dao = new DAO();
-    ListView brugerlist;
+    ListView liste;
     BrugerList adapter;
     ProgressBar progressBar;
     Button menu;
@@ -46,14 +42,13 @@ public class HighScore extends Fragment implements View.OnClickListener {
         brugerliste = new ArrayList<>();
         progressBar = view.findViewById(R.id.progress);
 
-        brugerlist = view.findViewById(R.id.brugerlist);
+        liste = view.findViewById(R.id.liste);
 
         adapter = new BrugerList(getActivity(), brugerliste);
 
-        brugerlist.setAdapter(adapter);
+        liste.setAdapter(adapter);
 
         new AsyncTaskBackground().execute();
-
 
         Log.d(TAG, "create " + brugerliste.size());
 
@@ -79,7 +74,7 @@ public class HighScore extends Fragment implements View.OnClickListener {
         protected void onPreExecute() {
             super.onPreExecute();
             progressBar.setVisibility(View.VISIBLE);
-            brugerlist.setVisibility(View.INVISIBLE);
+            liste.setVisibility(View.INVISIBLE);
         }
 
         protected Object doInBackground(Object... arg0) {
@@ -94,11 +89,8 @@ public class HighScore extends Fragment implements View.OnClickListener {
                             brugerliste.add((bruger));
                             Collections.sort(brugerliste);
 
-
                         }
-
                         adapter.notifyDataSetChanged();
-
                     }
 
                     @Override
@@ -107,17 +99,17 @@ public class HighScore extends Fragment implements View.OnClickListener {
                     }
 
                 });
-                return "Virker";
+                return "HighScore listen er loaded";
             } catch (Exception e) {
                 e.printStackTrace();
-                return "fejl";
+                return "Noget gik galt";
             }
         }
 
         @Override
         protected void onPostExecute(Object arg0) {
             progressBar.setVisibility(View.INVISIBLE);
-            brugerlist.setVisibility(View.VISIBLE);
+            liste.setVisibility(View.VISIBLE);
         }
 
     }

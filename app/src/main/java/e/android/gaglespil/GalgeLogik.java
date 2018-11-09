@@ -54,7 +54,7 @@ public class GalgeLogik {
     }
 
     public GalgeLogik() {
-        muligeOrd.add("bil"); /*
+        muligeOrd.add("bil");
         muligeOrd.add("computer");
         muligeOrd.add("programmering");
         muligeOrd.add("motorvej");
@@ -64,7 +64,7 @@ public class GalgeLogik {
         muligeOrd.add("solsort");
         muligeOrd.add("seksten");
         muligeOrd.add("sytten");
-        muligeOrd.add("atten"); */
+        muligeOrd.add("atten");
         nulstil();
     }
 
