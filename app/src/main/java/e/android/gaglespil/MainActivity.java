@@ -30,10 +30,12 @@ public class MainActivity extends Fragment implements View.OnClickListener {
         Button b1 = (Button) view.findViewById(R.id.hjælp);
         Button b2 = (Button) view.findViewById(R.id.Spil);
         Button b3 = (Button) view.findViewById(R.id.highscore);
+        Button b4 = (Button) view.findViewById(R.id.multiplayer);
 
         b1.setOnClickListener(this);
         b2.setOnClickListener(this);
         b3.setOnClickListener(this);
+        b4.setOnClickListener(this);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
@@ -74,6 +76,14 @@ public class MainActivity extends Fragment implements View.OnClickListener {
 
                 getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentindhold, new HighScore())
+                        .addToBackStack(null)
+                        .commit();
+                break;
+
+            case R.id.multiplayer:
+
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentindhold, new VælgOrd())
                         .addToBackStack(null)
                         .commit();
                 break;
