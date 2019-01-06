@@ -18,7 +18,8 @@ public class VælgOrd extends Fragment implements View.OnClickListener {
 
     GalgeLogik galgeLogik = new GalgeLogik();
     ListView liste;
-    VælgOrdList adapter;
+    String clickOrd;
+    VælgOrdList adapter, test;
     List<String> ordListe = galgeLogik.muligeOrd;
 
 
@@ -37,7 +38,6 @@ public class VælgOrd extends Fragment implements View.OnClickListener {
 
         liste.setAdapter(adapter);
 
-
         return view;
 
     }
@@ -45,5 +45,14 @@ public class VælgOrd extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
+        Log.d("hejsa", clickOrd);
+
+/*
+        Bundle bundle = new Bundle();
+        bundle.putString("nytord", String.valueOf(liste.getPositionForView(view)));
+
+        SelveSpillet selveSpillet = new SelveSpillet();
+        selveSpillet.setArguments(bundle);
+  */
     }
 }

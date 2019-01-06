@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
     ProgressBar progressBar;
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.selvespillet, container, false);
@@ -54,11 +56,44 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
         hentDR = view.findViewById(R.id.drtext);
         billede = view.findViewById(R.id.imageView);
 
+
+
+
         getKnap = (Button) view.findViewById(R.id.button);
         getKnap.setOnClickListener(this);
 
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
 
-        new AsyncTaskBackground().execute();
+            Log.d("testValgt", bundle.getString("valgtord"));
+            progressBar.setVisibility(View.INVISIBLE);
+            gæt.setVisibility(View.VISIBLE);
+            getKnap.setVisibility(View.VISIBLE);
+            hentDR.setVisibility(View.INVISIBLE);
+            ord.setVisibility(View.VISIBLE);
+            point.setVisibility(View.VISIBLE);
+            billede.setVisibility(View.VISIBLE);
+            Forkert.setVisibility(View.VISIBLE);
+
+
+            galgeLogik.setOrdet(bundle.getString("valgtord"));
+            Log.d("testOrdetFørnulstill", ""+ galgeLogik.getOrdet());
+            galgeLogik.nulstil();
+            galgeLogik.setOrdet(bundle.getString("valgtord"));
+            galgeLogik.opdaterSynligtOrd();
+            Log.d("testOrdetEfterDetERsat", ""+ galgeLogik.getOrdet());
+            ord.setText(galgeLogik.getSynligtOrd());
+            Log.d("testSynligtOrd", galgeLogik.getSynligtOrd());
+           Log.d("testOrdet", ""+ galgeLogik.getOrdet());
+            point.setText("Score: " + score);
+            ændreBillede();
+
+
+        } else {
+            new AsyncTaskBackground().execute();
+        }
+
+
 
 
         return view;
@@ -158,9 +193,11 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
         }
 
         protected Object doInBackground(Object... arg0) {
+
             try {
                 galgeLogik.hentOrdFraDr();
                 return "Du har hentet ord fra DR";
+
             } catch (Exception e) {
                 e.printStackTrace();
                 return "Der er sket en fejl, mens der er blevet hentet ord fra DR";

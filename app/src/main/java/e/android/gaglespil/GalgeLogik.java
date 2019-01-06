@@ -1,5 +1,7 @@
 package e.android.gaglespil;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,6 +14,7 @@ import java.util.Random;
 public class GalgeLogik {
 
     ArrayList<String> muligeOrd = new ArrayList<String>();
+
     private String ordet;
     private ArrayList<String> brugteBogstaver = new ArrayList<String>();
     private String synligtOrd;
@@ -33,6 +36,7 @@ public class GalgeLogik {
         return ordet;
     }
 
+
     public int getAntalForkerteBogstaver() {
         return antalForkerteBogstaver;
     }
@@ -51,6 +55,10 @@ public class GalgeLogik {
 
     public boolean erSpilletSlut() {
         return spilletErTabt || spilletErVundet;
+    }
+
+    public void setOrdet(String ordet) {
+        this.ordet = ordet;
     }
 
     public GalgeLogik() {
@@ -77,7 +85,7 @@ public class GalgeLogik {
         opdaterSynligtOrd();
     }
 
-    private void opdaterSynligtOrd() {
+    public void opdaterSynligtOrd() {
         synligtOrd = "";
         spilletErVundet = true;
         for (int n = 0; n < ordet.length(); n++) {
