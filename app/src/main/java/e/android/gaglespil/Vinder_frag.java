@@ -24,7 +24,10 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.vinder_layout, container, false);
 
-        //victorySong=MediaPlayer.create(Vinder_frag.this,
+
+        victorySong=MediaPlayer.create(getActivity(), R.raw.crabrave);
+
+        victorySong.start();
 
         vindertext = view.findViewById(R.id.vinderText);
         navnV = view.findViewById(R.id.navnV);
@@ -68,5 +71,13 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
         }
 
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        victorySong.release();
+    }
+
+
 
 }
