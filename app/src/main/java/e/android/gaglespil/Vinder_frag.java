@@ -1,6 +1,7 @@
 package e.android.gaglespil;
 
 import android.app.Fragment;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -18,10 +19,12 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
     String navn;
     TextView vindertext;
     EditText navnV;
+    MediaPlayer victorySong;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.vinder_layout, container, false);
 
+        //victorySong=MediaPlayer.create(Vinder_frag.this,
 
         vindertext = view.findViewById(R.id.vinderText);
         navnV = view.findViewById(R.id.navnV);
