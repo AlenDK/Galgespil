@@ -61,7 +61,6 @@ public class HighScore extends Fragment implements View.OnClickListener {
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.fragmentindhold, new MainActivity())
-                .addToBackStack(null)
                 .commit();
 
 

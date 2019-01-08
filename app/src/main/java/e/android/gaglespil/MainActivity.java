@@ -2,6 +2,8 @@ package e.android.gaglespil;
 
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -23,6 +25,16 @@ public class MainActivity extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main, container, false);
+
+
+        /*
+        FragmentManager manager = getActivity().getFragmentManager();
+        FragmentTransaction trans = manager.beginTransaction();
+        trans.remove(MainActivity.this);
+        trans.commit();
+        manager.popBackStack();
+*/
+
 
 
         procentVundet = (TextView) view.findViewById(R.id.procentVundet);
@@ -59,32 +71,32 @@ public class MainActivity extends Fragment implements View.OnClickListener {
             case R.id.hjælp:
 
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new Hjælp())
                         .addToBackStack(null)
+                        .replace(R.id.fragmentindhold, new Hjælp())
                         .commit();
                 break;
 
             case R.id.Spil:
 
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new SelveSpillet())
                         .addToBackStack(null)
+                        .replace(R.id.fragmentindhold, new SelveSpillet())
                         .commit();
                 break;
 
             case R.id.highscore:
 
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new HighScore())
                         .addToBackStack(null)
+                        .replace(R.id.fragmentindhold, new HighScore())
                         .commit();
                 break;
 
             case R.id.multiplayer:
 
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new VælgOrd())
                         .addToBackStack(null)
+                        .replace(R.id.fragmentindhold, new VælgOrd())
                         .commit();
                 break;
 

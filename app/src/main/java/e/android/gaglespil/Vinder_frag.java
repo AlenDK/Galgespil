@@ -1,6 +1,8 @@
 package e.android.gaglespil;
 
 import android.app.Fragment;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +14,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
+
+
+import com.github.jinatonic.confetti.CommonConfetti;
+
+
 public class Vinder_frag extends Fragment implements View.OnClickListener {
 
     DAO dao = new DAO();
@@ -21,13 +28,19 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
     EditText navnV;
     MediaPlayer victorySong;
 
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.vinder_layout, container, false);
+
 
 
         victorySong=MediaPlayer.create(getActivity(), R.raw.crabrave);
 
         victorySong.start();
+
+        CommonConfetti.rainingConfetti(container, new int[] { Color.WHITE, Color.BLACK })
+                .infinite();
+
 
         vindertext = view.findViewById(R.id.vinderText);
         navnV = view.findViewById(R.id.navnV);
