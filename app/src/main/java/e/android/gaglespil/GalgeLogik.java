@@ -1,10 +1,17 @@
 package e.android.gaglespil;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +29,39 @@ public class GalgeLogik {
     private boolean sidsteBogstavVarKorrekt;
     private boolean spilletErVundet;
     private boolean spilletErTabt;
+
+    private static final GalgeLogik ourInstance = new GalgeLogik();
+
+    static GalgeLogik getInstance() {
+        return ourInstance;
+    }
+
+
+    public ArrayList<String> getArrayList(String key, Activity activity){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        Gson gson = new Gson();
+        String json = prefs.getString(key,null);
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+
+    public void saveArrayList(ArrayList<String> list, String key, Activity activity) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(muligeOrd);
+        editor.putString(key, json);
+        editor.apply();
+    }
+
+
+
+
+
+
+
+
+
 
 
     public ArrayList<String> getBrugteBogstaver() {

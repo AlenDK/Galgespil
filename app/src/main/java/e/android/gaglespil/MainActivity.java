@@ -1,6 +1,7 @@
 package e.android.gaglespil;
 
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
@@ -26,9 +28,12 @@ import java.util.ArrayList;
 
 public class MainActivity extends Fragment implements View.OnClickListener {
 
-    GalgeLogik galgeLogik = new GalgeLogik();
+    GalgeLogik galgeLogik = new GalgeLogik().getInstance();
     SharedPreferences prefs ;
     TextView procentVundet;
+    ProgressBar progressBar;
+    TextView hentDR;
+    Button b1, b2, b3, b4;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,15 +43,17 @@ public class MainActivity extends Fragment implements View.OnClickListener {
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
 
-
+        progressBar = view.findViewById(R.id.progress);
+        hentDR = view.findViewById(R.id.drtext);
+        hentDR.setVisibility(View.INVISIBLE);
 
 
         procentVundet = (TextView) view.findViewById(R.id.procentVundet);
 
-        Button b1 = (Button) view.findViewById(R.id.hjælp);
-        Button b2 = (Button) view.findViewById(R.id.Spil);
-        Button b3 = (Button) view.findViewById(R.id.highscore);
-        Button b4 = (Button) view.findViewById(R.id.multiplayer);
+        b1 = (Button) view.findViewById(R.id.hjælp);
+        b2 = (Button) view.findViewById(R.id.Spil);
+        b3 = (Button) view.findViewById(R.id.highscore);
+        b4 = (Button) view.findViewById(R.id.multiplayer);
 
         b1.setOnClickListener(this);
         b2.setOnClickListener(this);
@@ -65,6 +72,10 @@ public class MainActivity extends Fragment implements View.OnClickListener {
 
 
 
+
+        if (galgeLogik.getArrayList("muligeord", getActivity()) == null) {
+            new AsyncTaskBackground().execute();
+        }
 /*
         if (getArrayList("muligeord").size() < 1) {
             Log.d("test", "lillebitte");
@@ -128,13 +139,13 @@ public class MainActivity extends Fragment implements View.OnClickListener {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-     /*       progressBar.setVisibility(View.VISIBLE);
-            gæt.setVisibility(View.INVISIBLE);
-            getKnap.setVisibility(View.INVISIBLE);
-            ord.setVisibility(View.INVISIBLE);
-            point.setVisibility(View.INVISIBLE);
-            billede.setVisibility(View.INVISIBLE);
-            Forkert.setVisibility(View.INVISIBLE); */
+            progressBar.setVisibility(View.VISIBLE);
+            hentDR.setVisibility(View.VISIBLE);
+            b1.setVisibility(View.INVISIBLE);
+            b2.setVisibility(View.INVISIBLE);
+            b3.setVisibility(View.INVISIBLE);
+            b4.setVisibility(View.INVISIBLE);
+            procentVundet.setVisibility(View.INVISIBLE);
         }
 
         protected Object doInBackground(Object... arg0) {
@@ -151,8 +162,20 @@ public class MainActivity extends Fragment implements View.OnClickListener {
 
         @Override
         protected void onPostExecute(Object arg0) {
+            progressBar.setVisibility(View.INVISIBLE);
+            hentDR.setVisibility(View.INVISIBLE);
+            b1.setVisibility(View.VISIBLE);
+            b2.setVisibility(View.VISIBLE);
+            b3.setVisibility(View.VISIBLE);
+            b4.setVisibility(View.VISIBLE);
+            procentVundet.setVisibility(View.VISIBLE);
+
+
             galgeLogik.nulstil();
+            galgeLogik.saveArrayList(galgeLogik.muligeOrd, "muligeord", getActivity());
+
         }
+
 
     }
 

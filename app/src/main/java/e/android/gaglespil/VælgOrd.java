@@ -22,12 +22,12 @@ import java.util.List;
 
 public class VælgOrd extends Fragment implements View.OnClickListener {
 
-    GalgeLogik galgeLogik = new GalgeLogik();
+   GalgeLogik galgeLogik = GalgeLogik.getInstance();
     ListView liste;
     String clickOrd;
     VælgOrdList adapter, test;
     SelveSpillet spillet = new SelveSpillet();
-    List<String> ordListe = galgeLogik.muligeOrd;
+    List<String> ordListe;
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,7 +40,10 @@ public class VælgOrd extends Fragment implements View.OnClickListener {
         */
 
 
-        ordListe = getArrayList("muligeord");
+        if (galgeLogik.getArrayList("muligeord", getActivity()) == null) {
+            ordListe = galgeLogik.muligeOrd;
+        } else {
+            ordListe = galgeLogik.getArrayList("muligeord", getActivity());        }
 
         liste = view.findViewById(R.id.listeOrd);
 
@@ -66,13 +69,7 @@ public class VælgOrd extends Fragment implements View.OnClickListener {
   */
     }
 
-    public ArrayList<String> getArrayList(String key){
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        Gson gson = new Gson();
-        String json = prefs.getString(key,null);
-        Type type = new TypeToken<ArrayList<String>>() {}.getType();
-        return gson.fromJson(json, type);
-    }
+
 
 
 }
