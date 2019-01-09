@@ -1,7 +1,9 @@
 package e.android.gaglespil;
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +13,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +26,7 @@ public class VælgOrd extends Fragment implements View.OnClickListener {
     ListView liste;
     String clickOrd;
     VælgOrdList adapter, test;
+    SelveSpillet spillet = new SelveSpillet();
     List<String> ordListe = galgeLogik.muligeOrd;
 
 
@@ -31,6 +38,9 @@ public class VælgOrd extends Fragment implements View.OnClickListener {
             ordListe = galgeLogik.muligeOrd;
         }
         */
+
+
+        ordListe = getArrayList("muligeord");
 
         liste = view.findViewById(R.id.listeOrd);
 
@@ -55,4 +65,14 @@ public class VælgOrd extends Fragment implements View.OnClickListener {
         selveSpillet.setArguments(bundle);
   */
     }
+
+    public ArrayList<String> getArrayList(String key){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        Gson gson = new Gson();
+        String json = prefs.getString(key,null);
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+
+
 }

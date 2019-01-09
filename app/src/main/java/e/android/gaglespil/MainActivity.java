@@ -5,9 +5,11 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +17,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class MainActivity extends Fragment implements View.OnClickListener {
 
-    SharedPreferences prefs;
+    GalgeLogik galgeLogik = new GalgeLogik();
+    SharedPreferences prefs ;
     TextView procentVundet;
 
     @Override
@@ -27,13 +35,9 @@ public class MainActivity extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.activity_main, container, false);
 
 
-        /*
-        FragmentManager manager = getActivity().getFragmentManager();
-        FragmentTransaction trans = manager.beginTransaction();
-        trans.remove(MainActivity.this);
-        trans.commit();
-        manager.popBackStack();
-*/
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+
 
 
 
@@ -49,8 +53,6 @@ public class MainActivity extends Fragment implements View.OnClickListener {
         b3.setOnClickListener(this);
         b4.setOnClickListener(this);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
         double antalV = (double) prefs.getInt("RoundV", 0);
         double antal = (double) prefs.getInt("Round", 0);
         double procentV = antalV / antal * 100;
@@ -61,48 +63,106 @@ public class MainActivity extends Fragment implements View.OnClickListener {
         procentVundet.setText("Du har vundet " + prefs.getInt("RoundV", 0) + " spil ud af " + prefs.getInt("Round", 0) + " \n"
                 + "Din winrate er på: " + df.format(procentV));
 
+
+
+/*
+        if (getArrayList("muligeord").size() < 1) {
+            Log.d("test", "lillebitte");
+        } else {
+            Log.d("test", "størst");
+        }
+*/
+
+
         return view;
     }
 
     @Override
     public void onClick(View view) {
 
+        FragmentManager fragManager = getFragmentManager();
+        fragManager.popBackStack();
+
+
         switch (view.getId()) {
             case R.id.hjælp:
 
                 getFragmentManager().beginTransaction()
-                        .addToBackStack(null)
                         .replace(R.id.fragmentindhold, new Hjælp())
+                        .addToBackStack(null)
                         .commit();
                 break;
 
             case R.id.Spil:
 
                 getFragmentManager().beginTransaction()
-                        .addToBackStack(null)
                         .replace(R.id.fragmentindhold, new SelveSpillet())
+                        .addToBackStack(null)
                         .commit();
                 break;
 
             case R.id.highscore:
 
                 getFragmentManager().beginTransaction()
-                        .addToBackStack(null)
                         .replace(R.id.fragmentindhold, new HighScore())
+                        .addToBackStack(null)
                         .commit();
                 break;
 
             case R.id.multiplayer:
 
                 getFragmentManager().beginTransaction()
-                        .addToBackStack(null)
                         .replace(R.id.fragmentindhold, new VælgOrd())
+                        .addToBackStack(null)
                         .commit();
                 break;
 
         }
 
     }
+
+
+
+    private class AsyncTaskBackground extends AsyncTask {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+     /*       progressBar.setVisibility(View.VISIBLE);
+            gæt.setVisibility(View.INVISIBLE);
+            getKnap.setVisibility(View.INVISIBLE);
+            ord.setVisibility(View.INVISIBLE);
+            point.setVisibility(View.INVISIBLE);
+            billede.setVisibility(View.INVISIBLE);
+            Forkert.setVisibility(View.INVISIBLE); */
+        }
+
+        protected Object doInBackground(Object... arg0) {
+
+            try {
+                galgeLogik.hentOrdFraDr();
+                return "Du har hentet ord fra DR";
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Der er sket en fejl, mens der er blevet hentet ord fra DR";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Object arg0) {
+            galgeLogik.nulstil();
+        }
+
+    }
+
+
+
+
+
+
+
+
 
 
 }

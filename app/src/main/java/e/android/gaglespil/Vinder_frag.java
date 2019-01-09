@@ -12,11 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-
-
-
 import com.github.jinatonic.confetti.CommonConfetti;
+import com.github.jinatonic.confetti.ConfettiManager;
 
 
 public class Vinder_frag extends Fragment implements View.OnClickListener {
@@ -26,7 +23,9 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
     String navn;
     TextView vindertext;
     EditText navnV;
+    int i = 1;
     MediaPlayer victorySong;
+    ConfettiManager confettiManager;
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,6 +55,8 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
 
         Button b1 = (Button) view.findViewById(R.id.tilbageTilHighScore2);
 
+
+
         b1.setOnClickListener(this);
 
         return view;
@@ -65,6 +66,7 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+
         switch (view.getId()) {
             case R.id.tilbageTilHighScore2:
 
@@ -89,8 +91,7 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
     public void onPause() {
         super.onPause();
         victorySong.release();
-    }
-
+        }
 
 
 }

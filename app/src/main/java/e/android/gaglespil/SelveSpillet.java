@@ -20,8 +20,12 @@ import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.net.URL;
+import java.util.ArrayList;
 
 
 public class SelveSpillet extends Fragment implements View.OnClickListener {
@@ -76,6 +80,7 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
             Forkert.setVisibility(View.VISIBLE);
 
 
+
             galgeLogik.setOrdet(bundle.getString("valgtord"));
             Log.d("testOrdetFørnulstill", ""+ galgeLogik.getOrdet());
             galgeLogik.nulstil();
@@ -93,8 +98,14 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
             new AsyncTaskBackground().execute();
         }
 
+/*
+        if (getArrayList("muligeord").size() < 1) {
+            Log.d("egon", "ggggg") ;
 
-
+        } else {
+            Log.d("egon", String.valueOf(getArrayList("muligeord")));
+        }
+*/
 
         return view;
     }
@@ -217,6 +228,7 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 
 
             galgeLogik.nulstil();
+            saveArrayList(galgeLogik.muligeOrd, "muligeord");
             ord.setText(galgeLogik.getSynligtOrd());
             point.setText("Score: " + score);
             ændreBillede();
@@ -278,6 +290,18 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
                     .commit();
         }
     }
+
+    public void saveArrayList(ArrayList<String> list, String key) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor editor = prefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(galgeLogik.muligeOrd);
+        editor.putString(key, json);
+        editor.apply();
+    }
+
+
+
 
 
 }
