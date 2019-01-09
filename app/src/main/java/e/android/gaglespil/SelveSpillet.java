@@ -66,6 +66,9 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
         getKnap = (Button) view.findViewById(R.id.button);
         getKnap.setOnClickListener(this);
 
+
+        galgeLogik.nulstil();
+
         Bundle bundle = this.getArguments();
         if (bundle != null) {
 
@@ -80,23 +83,23 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
             Forkert.setVisibility(View.VISIBLE);
 
 
-
-            galgeLogik.setOrdet(bundle.getString("valgtord"));
-            Log.d("testOrdetFørnulstill", ""+ galgeLogik.getOrdet());
-            galgeLogik.nulstil();
             galgeLogik.setOrdet(bundle.getString("valgtord"));
             galgeLogik.opdaterSynligtOrd();
-            Log.d("testOrdetEfterDetERsat", ""+ galgeLogik.getOrdet());
             ord.setText(galgeLogik.getSynligtOrd());
-            Log.d("testSynligtOrd", galgeLogik.getSynligtOrd());
-           Log.d("testOrdet", ""+ galgeLogik.getOrdet());
-            point.setText("Score: " + score);
-            ændreBillede();
-
 
         } else {
-            new AsyncTaskBackground().execute();
+            galgeLogik.muligeOrd = galgeLogik.getArrayList("muligeord", getActivity());
+            galgeLogik.nulstil();
+            ord.setText(galgeLogik.getSynligtOrd());
+            Log.d("egon", galgeLogik.getSynligtOrd());
+            Log.d("egon", galgeLogik.getOrdet());
+            // new AsyncTaskBackground().execute();
         }
+
+
+        point.setText("Score: " + score);
+        ændreBillede();
+
 
 /*
         if (getArrayList("muligeord").size() < 1) {
@@ -228,7 +231,6 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 
 
             galgeLogik.nulstil();
-            saveArrayList(galgeLogik.muligeOrd, "muligeord");
             ord.setText(galgeLogik.getSynligtOrd());
             point.setText("Score: " + score);
             ændreBillede();
@@ -289,15 +291,6 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
                     .replace(R.id.fragmentindhold, taberfraq)
                     .commit();
         }
-    }
-
-    public void saveArrayList(ArrayList<String> list, String key) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        SharedPreferences.Editor editor = prefs.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(galgeLogik.muligeOrd);
-        editor.putString(key, json);
-        editor.apply();
     }
 
 
