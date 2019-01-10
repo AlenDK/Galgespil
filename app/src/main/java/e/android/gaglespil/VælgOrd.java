@@ -33,17 +33,12 @@ public class VælgOrd extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.vaelgord_layout, container, false);
 
-        /*
-        for (int i = 0; i < galgeLogik.muligeOrd.size(); i++ ) {
-            ordListe = galgeLogik.muligeOrd;
-        }
-        */
-
-
         if (galgeLogik.getArrayList("muligeord", getActivity()) == null) {
             ordListe = galgeLogik.muligeOrd;
         } else {
-            ordListe = galgeLogik.getArrayList("muligeord", getActivity());        }
+            ordListe = galgeLogik.getArrayList("muligeord", getActivity());
+            ordListe.remove(0);
+        }
 
         liste = view.findViewById(R.id.listeOrd);
 

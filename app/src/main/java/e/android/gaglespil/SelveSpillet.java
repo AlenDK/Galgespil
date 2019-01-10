@@ -43,7 +43,6 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
     ProgressBar progressBar;
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.selvespillet, container, false);
@@ -60,28 +59,13 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
         hentDR = view.findViewById(R.id.drtext);
         billede = view.findViewById(R.id.imageView);
 
-
-
-
         getKnap = (Button) view.findViewById(R.id.button);
         getKnap.setOnClickListener(this);
-
 
         galgeLogik.nulstil();
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-
-            Log.d("testValgt", bundle.getString("valgtord"));
-            progressBar.setVisibility(View.INVISIBLE);
-            gæt.setVisibility(View.VISIBLE);
-            getKnap.setVisibility(View.VISIBLE);
-            hentDR.setVisibility(View.INVISIBLE);
-            ord.setVisibility(View.VISIBLE);
-            point.setVisibility(View.VISIBLE);
-            billede.setVisibility(View.VISIBLE);
-            Forkert.setVisibility(View.VISIBLE);
-
 
             galgeLogik.setOrdet(bundle.getString("valgtord"));
             galgeLogik.opdaterSynligtOrd();
@@ -89,26 +73,13 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 
         } else {
             galgeLogik.muligeOrd = galgeLogik.getArrayList("muligeord", getActivity());
+            galgeLogik.muligeOrd.remove(0);
             galgeLogik.nulstil();
             ord.setText(galgeLogik.getSynligtOrd());
-            Log.d("egon", galgeLogik.getSynligtOrd());
-            Log.d("egon", galgeLogik.getOrdet());
-            // new AsyncTaskBackground().execute();
         }
-
 
         point.setText("Score: " + score);
         ændreBillede();
-
-
-/*
-        if (getArrayList("muligeord").size() < 1) {
-            Log.d("egon", "ggggg") ;
-
-        } else {
-            Log.d("egon", String.valueOf(getArrayList("muligeord")));
-        }
-*/
 
         return view;
     }
@@ -191,60 +162,11 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
         prefs.edit().putInt("Round", gennemført).commit();
     }
 
-
-    private class AsyncTaskBackground extends AsyncTask {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
-            gæt.setVisibility(View.INVISIBLE);
-            getKnap.setVisibility(View.INVISIBLE);
-            ord.setVisibility(View.INVISIBLE);
-            point.setVisibility(View.INVISIBLE);
-            billede.setVisibility(View.INVISIBLE);
-            Forkert.setVisibility(View.INVISIBLE);
-        }
-
-        protected Object doInBackground(Object... arg0) {
-
-            try {
-                galgeLogik.hentOrdFraDr();
-                return "Du har hentet ord fra DR";
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "Der er sket en fejl, mens der er blevet hentet ord fra DR";
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Object arg0) {
-            progressBar.setVisibility(View.INVISIBLE);
-            gæt.setVisibility(View.VISIBLE);
-            getKnap.setVisibility(View.VISIBLE);
-            hentDR.setVisibility(View.INVISIBLE);
-            ord.setVisibility(View.VISIBLE);
-            point.setVisibility(View.VISIBLE);
-            billede.setVisibility(View.VISIBLE);
-            Forkert.setVisibility(View.VISIBLE);
-
-
-            galgeLogik.nulstil();
-            ord.setText(galgeLogik.getSynligtOrd());
-            point.setText("Score: " + score);
-            ændreBillede();
-        }
-
-    }
-
-
     public void opdaterSkærm() {
         ændreBillede();
         ord.setText(galgeLogik.getSynligtOrd());
         Forkert.setText("" + galgeLogik.getBrugteBogstaver());
 
-//dialog skal være her
         if (galgeLogik.erSpilletVundet()) {
 
             updatePoints(25);
@@ -292,9 +214,6 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
                     .commit();
         }
     }
-
-
-
 
 
 }
