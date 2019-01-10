@@ -25,7 +25,6 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
     EditText navnV;
     int i = 1;
     MediaPlayer victorySong;
-    ConfettiManager confettiManager;
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,12 +33,10 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
 
 
         victorySong=MediaPlayer.create(getActivity(), R.raw.crabrave);
-
         victorySong.start();
 
-        CommonConfetti.rainingConfetti(container, new int[] { Color.WHITE, Color.BLACK })
-                .infinite();
-
+        CommonConfetti.rainingConfetti(container, new int[] { Color.WHITE, Color.BLACK, Color.BLUE, Color.RED, Color.GREEN })
+            .stream(10000);
 
         vindertext = view.findViewById(R.id.vinderText);
         navnV = view.findViewById(R.id.navnV);
@@ -85,6 +82,7 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
                 break;
         }
 
+
     }
 
     @Override
@@ -92,6 +90,9 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
         super.onPause();
         victorySong.release();
         }
+
+
+
 
 
 }

@@ -1,6 +1,7 @@
 package e.android.gaglespil;
 
 import android.app.Fragment;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -20,11 +21,15 @@ public class Taber_frag extends Fragment implements View.OnClickListener {
     EditText navnn;
     int score;
     String navn;
+    MediaPlayer loserSong;
     ImageView billede;
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.taber_layout, container, false);
+
+        loserSong=MediaPlayer.create(getActivity(), R.raw.priceisright);
+        loserSong.start();
 
         taberOrd = view.findViewById(R.id.tabteOrd);
         scoreT = view.findViewById(R.id.scoreT);
@@ -69,6 +74,12 @@ public class Taber_frag extends Fragment implements View.OnClickListener {
                 break;
         }
 
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        loserSong.release();
     }
 
 }
