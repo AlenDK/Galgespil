@@ -33,7 +33,6 @@ public class SelveSpillet extends Fragment implements View.OnClickListener {
 
     SharedPreferences prefs;
 
-    DAO dao = new DAO();
     GalgeLogik galgeLogik = new GalgeLogik();
     TextView ord, Forkert, point, hentDR;
     int score, antalforsøg, gennemførtV, gennemført;

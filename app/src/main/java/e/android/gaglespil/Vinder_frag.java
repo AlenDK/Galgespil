@@ -14,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.github.jinatonic.confetti.CommonConfetti;
 import com.github.jinatonic.confetti.ConfettiManager;
 
@@ -25,7 +26,6 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
     String navn;
     TextView vindertext;
     EditText navnV;
-    int i = 1;
     Button b1;
     MediaPlayer victorySong;
     private Animation animation;
@@ -34,13 +34,13 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.vinder_layout, container, false);
 
-        animation  = AnimationUtils.loadAnimation(getActivity(), R.anim.animation);
+        animation = AnimationUtils.loadAnimation(getActivity(), R.anim.animation);
 
-        victorySong=MediaPlayer.create(getActivity(), R.raw.crabrave);
+        victorySong = MediaPlayer.create(getActivity(), R.raw.crabrave);
         victorySong.start();
 
-        CommonConfetti.rainingConfetti(container, new int[] { Color.WHITE, Color.BLACK, Color.BLUE, Color.RED, Color.GREEN })
-            .stream(10000);
+        CommonConfetti.rainingConfetti(container, new int[]{Color.WHITE, Color.BLACK, Color.BLUE, Color.RED, Color.GREEN})
+                .stream(10000);
 
         vindertext = view.findViewById(R.id.vinderText);
         navnV = view.findViewById(R.id.navnV);
@@ -95,10 +95,7 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
     public void onPause() {
         super.onPause();
         victorySong.release();
-        }
-
-
-
+    }
 
 
 }

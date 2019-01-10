@@ -52,17 +52,9 @@ public class VælgOrdList extends ArrayAdapter<String> implements View.OnClickLi
     }
 
 
-
-
-    public String getOrd() {
-        return wordView.getText().toString();
-    }
-
-
     @Override
     public void onClick(View view) {
         Button v = (Button) view;
-        Log.d("testtt", v.getText().toString());
 
         Bundle bundle = new Bundle();
         bundle.putString("valgtord", "" + v.getText().toString());
@@ -73,7 +65,6 @@ public class VælgOrdList extends ArrayAdapter<String> implements View.OnClickLi
         context.getFragmentManager().beginTransaction()
                 .replace(R.id.fragmentindhold, selveSpillet)
                 .commit();
-
 
     }
 }

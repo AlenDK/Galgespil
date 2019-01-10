@@ -22,11 +22,10 @@ import java.util.List;
 
 public class VælgOrd extends Fragment implements View.OnClickListener {
 
-   GalgeLogik galgeLogik = GalgeLogik.getInstance();
+    GalgeLogik galgeLogik = GalgeLogik.getInstance();
     ListView liste;
     String clickOrd;
-    VælgOrdList adapter, test;
-    SelveSpillet spillet = new SelveSpillet();
+    VælgOrdList adapter;
     List<String> ordListe;
 
 
@@ -55,16 +54,6 @@ public class VælgOrd extends Fragment implements View.OnClickListener {
 
         Log.d("hejsa", clickOrd);
 
-/*
-        Bundle bundle = new Bundle();
-        bundle.putString("nytord", String.valueOf(liste.getPositionForView(view)));
-
-        SelveSpillet selveSpillet = new SelveSpillet();
-        selveSpillet.setArguments(bundle);
-  */
     }
-
-
-
 
 }
