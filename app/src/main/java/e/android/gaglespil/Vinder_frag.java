@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,13 +26,15 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
     TextView vindertext;
     EditText navnV;
     int i = 1;
+    Button b1;
     MediaPlayer victorySong;
+    private Animation animation;
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.vinder_layout, container, false);
 
-
+        animation  = AnimationUtils.loadAnimation(getActivity(), R.anim.animation);
 
         victorySong=MediaPlayer.create(getActivity(), R.raw.crabrave);
         victorySong.start();
@@ -50,11 +54,12 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
                     + "Din score blev: " + score);
         }
 
-        Button b1 = (Button) view.findViewById(R.id.tilbageTilHighScore2);
-
-
+        b1 = (Button) view.findViewById(R.id.tilbageTilHighScore2);
 
         b1.setOnClickListener(this);
+
+        b1.startAnimation(animation);
+
 
         return view;
 
@@ -66,6 +71,7 @@ public class Vinder_frag extends Fragment implements View.OnClickListener {
 
         switch (view.getId()) {
             case R.id.tilbageTilHighScore2:
+                b1.startAnimation(animation);
 
                 if (navnV.getText().toString().length() == 0) {
                     navnV.setError("Indtast et navn!");
