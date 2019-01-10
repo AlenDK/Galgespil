@@ -76,13 +76,8 @@ public class MainActivity extends Fragment implements View.OnClickListener {
         if (galgeLogik.getArrayList("muligeord", getActivity()) == null) {
             new AsyncTaskBackground().execute();
         }
-/*
-        if (getArrayList("muligeord").size() < 1) {
-            Log.d("test", "lillebitte");
-        } else {
-            Log.d("test", "størst");
-        }
-*/
+
+
 
 
         return view;

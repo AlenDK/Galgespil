@@ -11,14 +11,11 @@
         android:id="@+id/multiplayer"
         android:layout_width="102dp"
         android:layout_height="61dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="56dp"
         android:layout_marginTop="252dp"
         android:background="@android:color/holo_purple"
         android:text="Multiplayer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.819"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/overskrift" />
 
     <Button
@@ -68,12 +65,12 @@
         android:layout_width="102dp"
         android:layout_height="61dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="68dp"
         android:layout_marginTop="252dp"
         android:background="@android:color/holo_orange_dark"
         android:text="HighScore"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.224"
+        app:layout_constraintEnd_toStartOf="@+id/multiplayer"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/overskrift" />
 
@@ -100,9 +97,10 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/drtext"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/drtext"

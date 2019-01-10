@@ -30,9 +30,13 @@ public class GalgeLogik {
     private boolean spilletErVundet;
     private boolean spilletErTabt;
 
-    private static final GalgeLogik ourInstance = new GalgeLogik();
+    private static GalgeLogik ourInstance;
 
     static GalgeLogik getInstance() {
+        if(ourInstance == null) {
+            ourInstance = new GalgeLogik();
+        }
+
         return ourInstance;
     }
 
@@ -53,15 +57,6 @@ public class GalgeLogik {
         editor.putString(key, json);
         editor.apply();
     }
-
-
-
-
-
-
-
-
-
 
 
     public ArrayList<String> getBrugteBogstaver() {
