@@ -50,14 +50,6 @@ public class HighScore extends Fragment implements View.OnClickListener {
 
         new AsyncTaskBackground().execute();
 
-
-     /*
-        }
-
-*/
-
-        Log.d(TAG, "create " + brugerliste.size());
-
         return view;
 
     }
@@ -68,8 +60,6 @@ public class HighScore extends Fragment implements View.OnClickListener {
         getFragmentManager().beginTransaction()
                 .replace(R.id.fragmentindhold, new MainActivity())
                 .commit();
-
-
     }
 
 
@@ -117,7 +107,7 @@ public class HighScore extends Fragment implements View.OnClickListener {
             liste.setVisibility(View.VISIBLE);
 
 
-            }
+        }
 
     }
 

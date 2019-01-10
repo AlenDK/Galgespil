@@ -40,7 +40,8 @@ public class GalgeLogik {
         return ourInstance;
     }
 
-
+// Disse to metoderer blevet taget fra https://freakycoder.com/android-notes-40-how-to-save-and-get-arraylist-into-sharedpreference-7d1f044bc79a
+// Der er også en forklaring, så jeg ved hvad der foregår, når jeg bruger disse 2 metoder
     public ArrayList<String> getArrayList(String key, Activity activity){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
         Gson gson = new Gson();

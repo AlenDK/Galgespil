@@ -18,7 +18,6 @@ public class BrugerList extends ArrayAdapter<Bruger> {
     private Activity context;
     private List<Bruger> brugerList;
     TextView placeringView, scoreView, nameView;
-    int i = 1;
 
     public BrugerList(Activity context, List<Bruger> brugerList) {
         super(context, R.layout.list_layout, brugerList);
@@ -37,36 +36,14 @@ public class BrugerList extends ArrayAdapter<Bruger> {
         scoreView = (TextView) listViewItem.findViewById(R.id.scoreLayout);
         placeringView = (TextView) listViewItem.findViewById(R.id.placering);
 
-
         Bruger bruger = brugerList.get(position);
-
-
-
 
         nameView.setText(bruger.getNavn());
         scoreView.setText("" + bruger.getScore());
-        placeringView.setText(position+1 + "");
-
-        Log.d( "tag" , "create " +brugerList.get(position));
-
-
-        Log.d( "tag" , "create " +brugerList.size());
-   /*    for (int i = 1; i < brugerList.size(); i++) {
-
-           Log.d( "tag" , "lol " + i);
-
-           placeringView.setText("h"+ i++);
-        }
-*/
-
+        placeringView.setText(position + 1 + "");
 
         return listViewItem;
 
     }
-
-
-    public void setPlacering(int i) {
-    }
-
 
 }

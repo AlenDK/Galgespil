@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class MainActivity extends Fragment implements View.OnClickListener {
 
     GalgeLogik galgeLogik = new GalgeLogik().getInstance();
-    SharedPreferences prefs ;
+    SharedPreferences prefs;
     TextView procentVundet;
     ProgressBar progressBar;
     TextView hentDR;
@@ -39,14 +39,11 @@ public class MainActivity extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main, container, false);
 
-
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
 
         progressBar = view.findViewById(R.id.progress);
         hentDR = view.findViewById(R.id.drtext);
         hentDR.setVisibility(View.INVISIBLE);
-
 
         procentVundet = (TextView) view.findViewById(R.id.procentVundet);
 
@@ -70,15 +67,9 @@ public class MainActivity extends Fragment implements View.OnClickListener {
         procentVundet.setText("Du har vundet " + prefs.getInt("RoundV", 0) + " spil ud af " + prefs.getInt("Round", 0) + " \n"
                 + "Din winrate er på: " + df.format(procentV));
 
-
-
-
         if (galgeLogik.getArrayList("muligeord", getActivity()) == null) {
             new AsyncTaskBackground().execute();
         }
-
-
-
 
         return view;
     }
@@ -88,7 +79,6 @@ public class MainActivity extends Fragment implements View.OnClickListener {
 
         FragmentManager fragManager = getFragmentManager();
         fragManager.popBackStack();
-
 
         switch (view.getId()) {
             case R.id.hjælp:
@@ -126,7 +116,6 @@ public class MainActivity extends Fragment implements View.OnClickListener {
         }
 
     }
-
 
 
     private class AsyncTaskBackground extends AsyncTask {
@@ -170,17 +159,5 @@ public class MainActivity extends Fragment implements View.OnClickListener {
             galgeLogik.saveArrayList(galgeLogik.muligeOrd, "muligeord", getActivity());
 
         }
-
-
     }
-
-
-
-
-
-
-
-
-
-
 }
